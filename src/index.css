@@ -1,0 +1,215 @@
+/* Import Flaticon before any other statements */
+/* @import "~@flaticon/flaticon-uicons/css/all/all"; */
+
+/* Tailwind CSS directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    margin: 0;
+    background-color: whitesmoke;
+}
+
+:root {
+  --vh: 100vh;
+}
+
+/* Use the custom property for the height */
+.full-height {
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+@font-face {
+  font-family: "Musky";
+  src: local("Musky"),
+    url("../src/assets/fonts/Musky.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "TT Milks Script Trl";
+  src: local("TT Milks Script Trl"),
+    url("../src/assets/fonts/TT Milks Script Trial Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Giantasela";
+  src: local("Giantasela"),
+    url("../src/assets/fonts/Giantasela.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Kind Heart";
+  src: local("Kind Heart"),
+    url("../src/assets/fonts/Kind Heart.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Cheque";
+  src: local("Cheque-Regular"),
+    url("../src/assets/fonts/Cheque-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "LEMONMILK-Bold";
+  src: local("LEMONMILK-Bold"),
+    url("../src/assets/fonts/LEMONMILK-Bold.otf") format("opentype");
+}
+
+select {
+  appearance: none; /* Remove default iOS dropdown styles */
+  -webkit-appearance: none; /* Safari-specific */
+  -moz-appearance: none; /* Firefox-specific */
+  background-color: white; /* Custom background */
+  border-left: 1px solid #ccc; /* Custom border */
+  padding: 8px; /* Spacing */
+  font-size: 12px; /* Custom font size */
+  border-top-right-radius: 6px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+}
+
+select:focus {
+  outline: none; /* Remove outline on focus */
+  border-color: #007aff; /* Add focus border color */ 
+}
+
+
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Change the background color of input fields with autofill in Chrome, Safari, and Edge */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-text-fill-color: #000 !important; /* Adjust text color if necessary */
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 10px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    background: #e7eefe;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #ffdde1;
+    border-radius: 2px;
+}
+ 
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #ee9ca7;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
+/* .footer-nav {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+.footer-nav.visible {
+  visibility: visible;
+  opacity: 1;
+} */
+
+.footer-nav {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.5s ease;
+}
+
+.footer-nav.visible {
+  height: 70px;
+}
+
+
+/* span.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anchorOriginTopRightRectangular.MuiBadge-overlapRectangular.css-dlwkee-MuiBadge-badge {
+    background-color: #f2707f !important;
+    color: white !important;
+} */
+
+input[type="radio"]:checked {
+  background-color: #f2707f;
+  border-color: #f2707f;
+}
+
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient {
+   background: linear-gradient(119deg,#ffdde1,#ee9ca7,#f2707f,#ee9ca7,#ffdde1);
+  background-size: 400% 400%;
+  animation: gradient-animation 6s ease-in-out infinite;
+}
+
+.button-shiny-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.button-shiny-effect::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 30%,
+    rgba(255, 255, 255, 0.527) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-10deg);
+  animation: move 1.5s infinite;
+  z-index: 1;
+}
+
+@keyframes move {
+  0% {
+    transform: translateX(-100%) skewX(-10deg);
+  }
+  100% {
+    transform: translateX(100%) skewX(-10deg);
+  }
+}
