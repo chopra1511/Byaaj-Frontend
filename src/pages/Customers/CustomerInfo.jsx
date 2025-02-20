@@ -43,14 +43,14 @@ const CustomerInfo = () => {
       variables: { customerID: customerID },
     }
   );
-  
+
   const totalInterestPaid =
     trackingData?.customerInterestTracking?.totalInterestPaid || 0;
 
   const [showTrack, setShowTrack] = useState(false);
   const navigate = useNavigate();
 
-  if ((customerLoading, customerEntriesLoading, trackingLoading)) {
+  if (customerLoading || customerEntriesLoading || trackingLoading) {
     return <Loading />;
   }
 
@@ -77,6 +77,14 @@ const CustomerInfo = () => {
       (customer?.entries[0]?.balance?.totalAmount || 0) *
       (customer?.interest / 100);
   }
+
+  const buttonStyles = {
+    borderRadius: "10px",
+    fontFamily: "Poppins",
+    textTransform: "capitalize",
+    fontSize: "16px",
+    padding: "8px 24px",
+  };
 
   return (
     <div className="overflow-hidden">
@@ -242,14 +250,7 @@ const CustomerInfo = () => {
             fullWidth
             size="large"
             onClick={() => handleNavigation("Paid")}
-            sx={{
-              borderRadius: "10px",
-              fontFamily: "Poppins",
-              textTransform: "capitalize",
-              backgroundColor: "#ef4444",
-              fontSize: "16px",
-              padding: "8px 24px",
-            }}
+            sx={{ ...buttonStyles, backgroundColor: "#ef4444" }}
           >
             You Gave
           </Button>
@@ -258,14 +259,7 @@ const CustomerInfo = () => {
             fullWidth
             size="large"
             onClick={() => handleNavigation("Got")}
-            sx={{
-              borderRadius: "10px",
-              fontFamily: "Poppins",
-              textTransform: "capitalize",
-              backgroundColor: "#22c55e",
-              fontSize: "16px",
-              padding: "8px 24px",
-            }}
+            sx={{ ...buttonStyles, backgroundColor: "#22c55e" }}
           >
             You Got
           </Button>
