@@ -9,7 +9,7 @@ import EditEntry from "./components/customer/EditEntry";
 
 // Initialize Apollo Client
 const client = new ApolloClient({
-  uri: "http://localhost:8080/graphql",
+  uri: "https://byaaj-backend.onrender.com/graphql",
   cache: new InMemoryCache(),
   // credentials: "include",
 });
