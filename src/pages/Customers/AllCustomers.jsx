@@ -109,7 +109,7 @@ const AllCustomers = () => {
       </div>
 
       <div className="h-full mt-20 px-5 pb-20 overflow-y-scroll hide-scrollbar">
-        {customers.length === 0 && (
+        {customers?.length === 0 && (
           <div className="h-full flex flex-col items-center justify-center">
             <img src={empty} alt="" className="w-72" />
             <h1 className="font-Poppins font-semibold">No Customers</h1>

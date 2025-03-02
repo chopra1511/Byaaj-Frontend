@@ -51,16 +51,16 @@ const User = () => {
         <div className="flex items-center">
           <div className="px-3">
             <h1 className="bg-slate-600 text-xl uppercase w-12 h-12 rounded-full flex items-center justify-center text-white font-Lemon">
-              {user.name.charAt(0)}
+              {user?.name.charAt(0)}
             </h1>
           </div>
 
           <div>
             <h1 className="font-Poppins text-base capitalize font-semibold">
-              {user.name}
+              {user?.name}
             </h1>
             <h1 className="font-Poppins text-[12px] text-slate-600">
-              {user.phone}
+              {user?.phone}
             </h1>
           </div>
         </div>
