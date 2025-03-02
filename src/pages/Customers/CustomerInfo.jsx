@@ -95,7 +95,7 @@ const CustomerInfo = () => {
         <h1 className="text-xl font-Poppins font-semibold text-slate-700 capitalize">
           {customer?.name}
         </h1>
-        <IconButton>
+        <IconButton onClick={() => navigate(`/customer-profile/${customerID}`)}>
           <i className="fi fi-br-menu-dots-vertical pt-1 px-2 text-slate-700"></i>
         </IconButton>
       </div>

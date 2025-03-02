@@ -6,7 +6,7 @@ import { useLocation, useNavigate, useParams } from "react-router";
 import IndianNumberFormat from "../utils/IndianNumberFormat";
 import TransactionDone from "../utils/TransactionDone";
 import { useMutation } from "@apollo/client";
-import { EDIT_ENTRY } from "../../mutations/CustomerMutations";
+import { DELETE_ENTRY, EDIT_ENTRY } from "../../mutations/CustomerMutations";
 import { ALL_CUSTOMERS, GET_ENTRIES } from "../../queries/CustomerQueries";
 
 const EditEntry = () => {
@@ -14,6 +14,8 @@ const EditEntry = () => {
   const { customerID } = useParams();
   const location = useLocation();
   const { entry } = location.state || {};
+
+  console.log(entry.id, customerID)
 
   const [startDate, setStartDate] = useState(
     entry?.date ? new Date(Number(entry.date)) : new Date()
@@ -24,18 +26,11 @@ const EditEntry = () => {
   const [showTransactionDone, setShowTransactionDone] = useState(false);
 
   const [editEntry] = useMutation(EDIT_ENTRY);
+  const [deleteEntry] = useMutation(DELETE_ENTRY);
 
   const handleEntryForm = (e) => {
     e.preventDefault();
-    // console.log({
-    //   customerID: customerID,
-    //   entryID: entry.id,
-    //   amount: parseFloat(amount),
-    //   details: details,
-    //   date: startDate,
-    //   type: entry.type,
-    // });
-
+  
     editEntry({
       variables: {
         customerID: customerID,
@@ -62,6 +57,22 @@ const EditEntry = () => {
       navigate(-1);
     }, 2000);
   };
+
+  const deleteEntryHandler = () => {
+    deleteEntry({
+      variables: {
+        customerID: customerID,
+        entryID: entry.id,
+      },
+      refetchQueries: [
+        {
+          query: GET_ENTRIES,
+          variables: { customerID: customerID },
+        }
+      ]
+    });
+    navigate(-1);
+  }
 
   // Helper to get type-based styles
   const getTypeStyles = (entry) => {
@@ -143,7 +154,7 @@ const EditEntry = () => {
                     variant="contained"
                     fullWidth
                     size="large"
-                    onClick={() => console.log("Entry Deleted")}
+                    onClick={deleteEntryHandler}
                     sx={{
                       borderRadius: "10px",
                       fontFamily: "Poppins",

@@ -24,6 +24,12 @@ const ADD_CUSTOMER = gql`
   }
 `;
 
+const DELETE_CUSTOMER = gql`
+  mutation DeleteCustomer($customerID: ID) {
+    deleteCustomer(customerID: $customerID)
+  }
+`;
+
 const ADD_ENTRY = gql`
   mutation AddEntry(
     $customerID: ID
@@ -81,6 +87,12 @@ const EDIT_ENTRY = gql`
   }
 `;
 
+const DELETE_ENTRY = gql`
+  mutation DeleteEntry($customerID: ID,$entryID: ID) {
+    deleteEntry(customerID: $customerID,entryID: $entryID) 
+}
+`;
+
 const INTEREST_TRACKING = gql`
   mutation UpdateInterestTracking(
     $customerID: ID
@@ -113,4 +125,11 @@ const INTEREST_TRACKING = gql`
   }
 `;
 
-export { ADD_CUSTOMER, ADD_ENTRY, EDIT_ENTRY, INTEREST_TRACKING };
+export {
+  ADD_CUSTOMER,
+  ADD_ENTRY,
+  EDIT_ENTRY,
+  INTEREST_TRACKING,
+  DELETE_CUSTOMER,
+  DELETE_ENTRY,
+};

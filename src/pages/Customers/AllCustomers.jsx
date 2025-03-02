@@ -6,6 +6,7 @@ import { useQuery } from "@apollo/client";
 import { ALL_CUSTOMERS, GET_ENTRIES } from "../../queries/CustomerQueries";
 import IndianNumberFormat from "../../components/utils/IndianNumberFormat";
 import useBalanceTotals from "../../components/customHooks/useBalanceTotal";
+import empty from "../../assets/empty.jpg";
 import Loading from "../../components/utils/Loading";
 
 const AllCustomerList = ({ customer }) => {
@@ -40,7 +41,9 @@ const AllCustomerList = ({ customer }) => {
           {customer.name.charAt(0)}
         </h1>
         <div>
-          <h1 className="text-sm font-Poppins font-medium capitalize">{customer.name}</h1>
+          <h1 className="text-sm font-Poppins font-medium capitalize">
+            {customer.name}
+          </h1>
           {customer.interest > 0 && (
             <p className="text-[12px] font-Poppins font-medium text-gray-600">
               Interest - {customer.interest}%
@@ -67,7 +70,7 @@ const AllCustomerList = ({ customer }) => {
         </h1>
         {customer?.interest > 0 && (
           <p className="text-[12px] font-Poppins font-medium text-gray-500">
-            ₹{interestAmountPerMonth}/M
+            ₹{Math.floor(interestAmountPerMonth)}/M
           </p>
         )}
         <p className="text-[12px] font-Poppins font-semibold text-gray-500">
@@ -92,7 +95,7 @@ const AllCustomers = () => {
     return <Loading />;
   }
   return (
-    <div className="overflow-hidden">
+    <div className="h-screen overflow-hidden">
       <div className="p-2 lg:w-1/4 bg-white drop-shadow-xl flex items-center justify-between fixed top-0 left-0 right-0 z-10">
         <IconButton onClick={() => navigate(-1)}>
           <i className="fi fi-br-arrow-left pt-1 px-2 text-slate-700"></i>
@@ -105,12 +108,21 @@ const AllCustomers = () => {
         </IconButton>
       </div>
 
-      <div className="mt-24 px-5 pb-20 overflow-y-scroll hide-scrollbar">
+      <div className="h-full mt-20 px-5 pb-20 overflow-y-scroll hide-scrollbar">
+        {customers.length === 0 && (
+          <div className="h-full flex flex-col items-center justify-center">
+            <img src={empty} alt="" className="w-72" />
+            <h1 className="font-Poppins font-semibold">No Customers</h1>
+            <p className="font-milk text-[12px] text-slate-600">
+              Please add new customer
+            </p>
+          </div>
+        )}
+
         {customers?.map((customer) => (
           <AllCustomerList key={customer.id} customer={customer} />
         ))}
       </div>
-
       <Footer />
     </div>
   );

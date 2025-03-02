@@ -6,19 +6,31 @@ import CustomerInfo from "./pages/Customers/CustomerInfo";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import AddEntry from "./components/customer/AddEntry";
 import EditEntry from "./components/customer/EditEntry";
+import CustomerSettings from "./pages/Customers/CustomerSettings";
+import LoginPage from "./pages/Login/LoginPage";
+import User from "./pages/Login/User";
 
 // Initialize Apollo Client
 const client = new ApolloClient({
-  uri: "https://byaaj-backend.onrender.com/graphql",
+  // uri: "https://byaaj-backend.onrender.com/graphql",
+  uri: "http://localhost:8080/graphql",
   cache: new InMemoryCache(),
-  // credentials: "include",
+  credentials: "include",
 });
 
 const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
+      element: <LoginPage />,
+    },
+    {
+      path: "/home",
       element: <HomePage />,
+    },
+    {
+      path: "/user",
+      element: <User />,
     },
     {
       path: "/customers",
@@ -27,6 +39,10 @@ const App = () => {
     {
       path: "/customer-info/:customerID",
       element: <CustomerInfo />,
+    },
+    {
+      path: "/customer-profile/:customerID",
+      element: <CustomerSettings />,
     },
     {
       path: "/add-entries/:customerID",
