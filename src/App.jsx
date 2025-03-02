@@ -12,8 +12,8 @@ import User from "./pages/Login/User";
 
 // Initialize Apollo Client
 const client = new ApolloClient({
-  // uri: "https://byaaj-backend.onrender.com/graphql",
-  uri: "http://localhost:8080/graphql",
+  uri: "https://byaaj-backend.onrender.com/graphql",
+  // uri: "http://localhost:8080/graphql",
   cache: new InMemoryCache(),
   credentials: "include",
 });
