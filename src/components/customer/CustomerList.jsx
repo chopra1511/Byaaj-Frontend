@@ -65,7 +65,7 @@ const CustomerListItem = ({ name, initial, customer }) => {
 const CustomerList = ({ customers }) => {
   return (
     <>
-      {customers.length === 0 && (
+      {customers?.length === 0 && (
         <div className="flex flex-col items-center">
           <img src={empty} alt="" className="w-72" />
           <h1 className="font-Poppins font-semibold">No Customers</h1>
