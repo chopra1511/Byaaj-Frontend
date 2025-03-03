@@ -1,9 +1,10 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { Button, IconButton } from "@mui/material";
+import { Button, CircularProgress, IconButton } from "@mui/material";
 import React from "react";
 import { useNavigate, useParams } from "react-router";
 import { ALL_CUSTOMERS, GET_CUSTOMER } from "../../queries/CustomerQueries";
 import { DELETE_CUSTOMER } from "../../mutations/CustomerMutations";
+import Loading from "../../components/utils/Loading";
 
 const CustomerSettings = () => {
   const navigate = useNavigate();
@@ -14,14 +15,20 @@ const CustomerSettings = () => {
   );
   const customer = customerData?.customer;
 
-  const [deleteCustomer] = useMutation(DELETE_CUSTOMER);
+  const [deleteCustomer, { loading: deleteLoadin }] = useMutation(
+    DELETE_CUSTOMER,
+    {
+      onCompleted: () => {
+        navigate("/home");
+      },
+    }
+  );
 
   const deleteHandler = () => {
     deleteCustomer({
       variables: { customerID: customerID },
       refetchQueries: [{ query: ALL_CUSTOMERS }],
     });
-    navigate("/home");
   };
 
   const buttonStyles = {
@@ -31,6 +38,10 @@ const CustomerSettings = () => {
     fontSize: "16px",
     padding: "8px 24px",
   };
+
+  if (customerLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="overflow-hidden">
@@ -81,7 +92,11 @@ const CustomerSettings = () => {
               onClick={deleteHandler}
               sx={{ ...buttonStyles, backgroundColor: "#ef4444" }}
             >
-              Delete Customer
+              {deleteLoadin ? (
+                <CircularProgress size={"30px"} color="white" />
+              ) : (
+                "Delete Customer"
+              )}
             </Button>
           </div>
         </div>

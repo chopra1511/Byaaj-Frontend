@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { IOSSwitch } from "../utils/ToggleSwitch";
+import CircularProgress from "@mui/material/CircularProgress";
 import { Button, FormControlLabel } from "@mui/material";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -14,7 +15,7 @@ const CustomerFormModal = ({ setOpenModal }) => {
   const [startDate, setStartDate] = useState(new Date());
   const navigate = useNavigate();
 
-  const [addCustomer] = useMutation(ADD_CUSTOMER);
+  const [addCustomer, { loading, error }] = useMutation(ADD_CUSTOMER);
 
   const nameRef = useRef();
   const numberRef = useRef();
@@ -43,7 +44,6 @@ const CustomerFormModal = ({ setOpenModal }) => {
     } catch (error) {
       console.error("Error adding customer:", error);
     }
-    
   };
 
   return (
@@ -154,7 +154,11 @@ const CustomerFormModal = ({ setOpenModal }) => {
                 },
               }}
             >
-              Save
+              {loading ? (
+                <CircularProgress size={"20px"} color="white" />
+              ) : (
+                "Save"
+              )}
             </Button>
           </div>
         </form>

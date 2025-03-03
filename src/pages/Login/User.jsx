@@ -1,4 +1,4 @@
-import { Button, FormControlLabel, IconButton } from "@mui/material";
+import { Button, CircularProgress, FormControlLabel, IconButton } from "@mui/material";
 import React from "react";
 import { IOSSwitch } from "../../components/utils/ToggleSwitch";
 import Footer from "../../components/Footer/Footer";
@@ -142,7 +142,7 @@ const User = () => {
           onClick={handleLogout}
           sx={{ ...buttonStyles, backgroundColor: "#ef4444" }}
         >
-          {logoutLoadin ? "..." : "Logout"}
+          {logoutLoadin ? <CircularProgress size={"30px"} color="white" /> : "Logout"}
         </Button>
       </div>
 

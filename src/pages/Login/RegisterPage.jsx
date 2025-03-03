@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import React, { useRef } from "react";
 import { REGISTER_USER } from "../../mutations/UserMutations";
 
@@ -89,7 +89,7 @@ const RegisterPage = ({ onLoginPage }) => {
                   textTransform: "none",
                 }}
               >
-                {loading ? "..." : "Register"}
+                {loading ? <CircularProgress size={"20px"} color="white" /> : "Register"}
               </Button>
             </div>
           </form>
