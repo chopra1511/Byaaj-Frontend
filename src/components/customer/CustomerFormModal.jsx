@@ -94,7 +94,7 @@ const CustomerFormModal = ({ setOpenModal }) => {
               />
               <select
                 className="absolute top-5 right-2 w-fit text-[12px] py-2 outline-none border-l"
-                onClick={(e) => setType(e.target.value)}
+                onChange={(e) => setType(e.target.value)}
               >
                 <option value="Paid" className="text-red-500">
                   You Gave
@@ -143,7 +143,7 @@ const CustomerFormModal = ({ setOpenModal }) => {
               variant="contained"
               type="submit"
               sx={{
-                width:"100%",
+                width: "100%",
                 backgroundColor: "#334155",
                 color: "#fff",
                 padding: "5px",
@@ -151,7 +151,7 @@ const CustomerFormModal = ({ setOpenModal }) => {
                 borderRadius: "8px",
                 ":hover": {
                   backgroundColor: "black",
-                }
+                },
               }}
             >
               Save
