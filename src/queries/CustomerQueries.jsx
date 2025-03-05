@@ -86,4 +86,35 @@ const GET_TRACKING = gql`
   }
 `;
 
-export { ALL_CUSTOMERS, GET_CUSTOMER, GET_ENTRIES, GET_TRACKING };
+const UPCOMING_PAYMENTS = gql`
+  query UpcomingPayments {
+    customersWithUpcomingInterest {
+      id
+      name
+      phone
+      interest
+      entries {
+        entries {
+          type
+          amount
+          details
+          date
+        }
+        balance {
+          totalAmount
+          type
+        }
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export {
+  ALL_CUSTOMERS,
+  GET_CUSTOMER,
+  GET_ENTRIES,
+  GET_TRACKING,
+  UPCOMING_PAYMENTS,
+};

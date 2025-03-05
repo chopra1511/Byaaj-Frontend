@@ -6,10 +6,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useMutation } from "@apollo/client";
 import { ADD_CUSTOMER } from "../../mutations/CustomerMutations";
-import { ALL_CUSTOMERS } from "../../queries/CustomerQueries";
+import { ALL_CUSTOMERS, UPCOMING_PAYMENTS } from "../../queries/CustomerQueries";
 import { useNavigate } from "react-router";
 
-const CustomerFormModal = ({ setOpenModal }) => {
+const CustomerFormModal = ({ setOpenModal, darkMode }) => {
   const [isChecked, setChecked] = useState(false);
   const [type, setType] = useState("Paid");
   const [startDate, setStartDate] = useState(new Date());
@@ -34,7 +34,7 @@ const CustomerFormModal = ({ setOpenModal }) => {
           initialType: type,
           date: startDate,
         },
-        refetchQueries: [{ query: ALL_CUSTOMERS }],
+        refetchQueries: [{ query: ALL_CUSTOMERS }, {query: UPCOMING_PAYMENTS}],
       });
 
       // Extract the customer ID from the mutation response
@@ -52,10 +52,16 @@ const CustomerFormModal = ({ setOpenModal }) => {
       onClick={() => setOpenModal(false)}
     >
       <div
-        className="p-5 w-96 bg-white font-Poppins rounded-xl"
+        className={`p-5 w-96 ${
+          darkMode ? "bg-slate-700" : "bg-white"
+        } font-Poppins rounded-xl`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="text-center text-slate-700">
+        <div
+          className={`text-center ${
+            darkMode ? "text-white" : "text-slate-700"
+          }`}
+        >
           <h1 className="text-xl font-Poppins font-bold ">New Customer</h1>
           <p className="text-[12px] font-Quicksand font-semibold">
             Add new customer details
@@ -63,14 +69,20 @@ const CustomerFormModal = ({ setOpenModal }) => {
         </div>
 
         <form onSubmit={handleFormSubmit}>
-          <div className="grid grid-cols-2 gap-4 mt-5 text-slate-700">
+          <div
+            className={`grid grid-cols-2 gap-4 mt-5 ${
+              darkMode ? "text-white" : "text-slate-700"
+            }`}
+          >
             <div className="grid col-span-2">
               <label className="text-[12px] font-medium">Customer Name*</label>
               <input
                 type="text"
                 placeholder="Enter Customer Name"
                 ref={nameRef}
-                className="py-2 px-3 text-sm outline-black border rounded-lg placeholder:text-[12px]"
+                className={`py-2 px-3 text-sm ${
+                  darkMode ? "bg-slate-600 outline-white" : "outline-black"
+                } border rounded-lg placeholder:text-[12px]`}
               />
             </div>
 
@@ -80,7 +92,9 @@ const CustomerFormModal = ({ setOpenModal }) => {
                 type="tel"
                 placeholder="Enter Customer Number"
                 ref={numberRef}
-                className="py-2 px-3 text-sm outline-black border rounded-lg placeholder:text-[12px]"
+                className={`py-2 px-3 text-sm ${
+                  darkMode ? "bg-slate-600 outline-white" : "outline-black"
+                } border rounded-lg placeholder:text-[12px]`}
               />
             </div>
 
@@ -90,10 +104,14 @@ const CustomerFormModal = ({ setOpenModal }) => {
                 type="number"
                 placeholder="Enter Initial Amount"
                 ref={amountRef}
-                className="relative py-2 px-3 text-sm outline-black border rounded-lg placeholder:text-[12px]"
+                className={`relative py-2 px-3 text-sm ${
+                  darkMode ? "bg-slate-600 outline-white" : "outline-black"
+                } border rounded-lg placeholder:text-[12px]`}
               />
               <select
-                className="absolute top-5 right-2 w-fit text-[12px] py-2 outline-none border-l"
+                className={`absolute top-5 right-2 w-fit text-[12px] py-2 ${
+                  darkMode ? "bg-slate-600" : "bg-white"
+                } outline-none border-l`}
                 onChange={(e) => setType(e.target.value)}
               >
                 <option value="Paid" className="text-red-500">
@@ -123,7 +141,9 @@ const CustomerFormModal = ({ setOpenModal }) => {
                   placeholder="Enter Interest Rate"
                   step={0.01}
                   ref={interestRef}
-                  className="w-full py-2 px-3 text-sm outline-black border rounded-lg placeholder:text-[12px]"
+                  className={`w-full py-2 px-3 text-sm ${
+                    darkMode ? "bg-slate-600 outline-white" : "outline-black"
+                  } border rounded-lg placeholder:text-[12px]`}
                 />
               </div>
             )}
@@ -131,7 +151,9 @@ const CustomerFormModal = ({ setOpenModal }) => {
             <div className="grid col-span-1">
               <label className="text-[12px] font-medium">Date</label>
               <DatePicker
-                className="w-full text-[12px] font-medium border py-2 px-3 rounded-lg"
+                className={`w-full text-[12px] ${
+                  darkMode ? "bg-slate-600 text-white" : "bg-white text-black"
+                } font-medium border py-2 px-3 rounded-lg`}
                 selected={startDate}
                 popperPlacement="bottom-end"
                 onChange={(date) => setStartDate(date)}
@@ -144,13 +166,14 @@ const CustomerFormModal = ({ setOpenModal }) => {
               type="submit"
               sx={{
                 width: "100%",
-                backgroundColor: "#334155",
-                color: "#fff",
+                backgroundColor: darkMode ? "#cbd5e1 " : "#334155",
+                color: darkMode ? "black" : "#fff",
                 padding: "5px",
                 border: "none",
                 borderRadius: "8px",
                 ":hover": {
                   backgroundColor: "black",
+                  color: "white"
                 },
               }}
             >

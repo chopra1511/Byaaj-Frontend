@@ -2,9 +2,9 @@ import { useNavigate } from "react-router";
 import IndianNumberFormat from "../utils/IndianNumberFormat";
 import { useQuery } from "@apollo/client";
 import { GET_ENTRIES } from "../../queries/CustomerQueries";
-import empty from "../../assets/empty.jpg";
+import empty from "../../assets/empty.png";
 
-const CustomerListItem = ({ name, initial, customer }) => {
+const CustomerListItem = ({ name, initial, customer,darkMode }) => {
   const { data: customerEntriesData } = useQuery(GET_ENTRIES, {
     variables: { customerID: customer.id },
   });
@@ -20,18 +20,24 @@ const CustomerListItem = ({ name, initial, customer }) => {
   const navigate = useNavigate();
   return (
     <div
-      className="py-2 px-3 flex items-center justify-between border-b last:border-b-0 bg-white cursor-pointer hover:drop-shadow-md"
+      className={`py-2 px-3 flex items-center justify-between border-b last:border-b-0 ${
+        darkMode ? "bg-slate-700 border-slate-500" : "bg-white"
+      } cursor-pointer hover:drop-shadow-md`}
       onClick={() => navigate(`/customer-info/${customer.id}`)}
     >
       <div className="flex items-center gap-2">
-        <h1 className="bg-slate-700 w-10 h-10 flex items-center justify-center font-Lemon text-white rounded-full">
+        <h1
+          className={`${
+            darkMode ? "bg-white text-slate-600" : "bg-slate-700 text-white"
+          } w-10 h-10 flex items-center justify-center font-Lemon rounded-full`}
+        >
           {initial}
         </h1>
         <div>
-          <h1 className="text-sm font-Poppins font-medium capitalize">
+          <h1 className={`${darkMode ? "text-white" : "text-black"} text-sm font-Poppins font-medium capitalize`}>
             {name}
           </h1>
-          <p className="text-[12px] font-Poppins font-medium text-gray-600">
+          <p className={`text-[12px] font-Poppins font-medium ${darkMode ? "text-slate-400" : "text-slate-600"}`}>
             {date}
           </p>
         </div>
@@ -50,7 +56,7 @@ const CustomerListItem = ({ name, initial, customer }) => {
             amount={customer.entries[0].balance.totalAmount}
           />
         </h1>
-        <p className="text-[12px] font-Poppins font-medium text-gray-500">
+        <p className={`text-[12px] font-Poppins font-medium ${darkMode ? "text-slate-400" : "text-slate-600"}`}>
           {customer.entries[0].balance.type === "Paid"
             ? "You'll Get"
             : customer.entries[0].balance.type === "Got"
@@ -62,14 +68,24 @@ const CustomerListItem = ({ name, initial, customer }) => {
   );
 };
 
-const CustomerList = ({ customers }) => {
+const CustomerList = ({ customers,darkMode }) => {
   return (
     <>
       {customers?.length === 0 && (
         <div className="flex flex-col items-center">
           <img src={empty} alt="" className="w-72" />
-          <h1 className="font-Poppins font-semibold">No Customers</h1>
-          <p className="font-milk text-[12px] text-slate-600">
+          <h1
+            className={`font-Poppins ${
+              darkMode ? "text-white" : "text-black"
+            } font-semibold`}
+          >
+            No Customers
+          </h1>
+          <p
+            className={`font-milk text-[12px] ${
+              darkMode ? "text-slate-400" : "text-slate-600"
+            } `}
+          >
             Please add new customer
           </p>
         </div>
@@ -84,6 +100,7 @@ const CustomerList = ({ customers }) => {
               name={customer.name}
               initial={customer.name.charAt(0)}
               customer={customer}
+              darkMode={darkMode}
             />
           ))}
       </div>

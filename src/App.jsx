@@ -9,6 +9,7 @@ import EditEntry from "./components/customer/EditEntry";
 import CustomerSettings from "./pages/Customers/CustomerSettings";
 import LoginPage from "./pages/Login/LoginPage";
 import User from "./pages/Login/User";
+import UpcomingPayments from "./pages/Customers/UpcomingPayments";
 
 // Initialize Apollo Client
 const client = new ApolloClient({
@@ -35,6 +36,10 @@ const App = () => {
     {
       path: "/customers",
       element: <AllCustomers />,
+    },
+    {
+      path: "/upcoming",
+      element: <UpcomingPayments />,
     },
     {
       path: "/customer-info/:customerID",

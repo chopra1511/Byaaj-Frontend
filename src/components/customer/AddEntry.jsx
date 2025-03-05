@@ -17,7 +17,7 @@ const AddEntry = () => {
   const navigate = useNavigate();
   const { customerID } = useParams();
   const location = useLocation();
-  const { type,name } = location.state || {};
+  const { type, name, darkMode } = location.state || {};
 
   const detailRef = useRef();
   
@@ -67,11 +67,17 @@ const AddEntry = () => {
     <>
       {!showTransactionDone && (
         <div>
-          <div className="p-2 lg:w-1/4 bg-white drop-shadow-xl flex items-center justify-between fixed top-0 left-0 right-0 z-10">
+          <div
+            className={`p-2 lg:w-1/4 ${
+              darkMode ? "bg-slate-700" : "bg-white"
+            } drop-shadow-xl flex items-center justify-between fixed top-0 left-0 right-0 z-10`}
+          >
             <IconButton onClick={() => navigate(-1)}>
               <i className={`fi fi-br-arrow-left pt-1 px-2 ${typeStyles}`}></i>
             </IconButton>
-            <h1 className={`text-lg font-Poppins font-semibold capitalize ${typeStyles}`}>
+            <h1
+              className={`text-lg font-Poppins font-semibold capitalize ${typeStyles}`}
+            >
               {type === "Paid" ? (
                 <>
                   You gave {name} <IndianNumberFormat amount={amount} />
@@ -87,7 +93,7 @@ const AddEntry = () => {
             <i className="fi fi-br-menu-dots-vertical pt-1 px-2 invisible"></i>
           </div>
 
-          <div className="mt-24 px-5">
+          <div className={`h-screen ${darkMode ? "bg-slate-900" : ""} pt-24 px-5`}>
             <form onSubmit={handleEntryForm}>
               <div className="grid grid-cols-2 gap-2">
                 <div className="relative grid col-span-2">
@@ -95,7 +101,7 @@ const AddEntry = () => {
                     type="number"
                     placeholder="Enter Amount"
                     onChange={(e) => setAmount(e.target.value)}
-                    className={`relative py-3 px-8 border text-lg rounded-lg w-full ${typeStyles} font-Poppins font-medium`}
+                    className={`relative py-3 px-8 border text-lg rounded-lg w-full ${darkMode ? "bg-transparent" : ""} ${typeStyles} font-Poppins font-medium`}
                   />
                   <i
                     className={`fi fi-br-indian-rupee-sign ${typeStyles} pt-1 absolute top-3 left-3`}
@@ -107,14 +113,14 @@ const AddEntry = () => {
                       type="text"
                       placeholder="Enter Detatils"
                       ref={detailRef}
-                      className={`relative py-2 px-3 border text-sm rounded-lg w-full outline-gray-400 font-Poppins font-medium`}
+                      className={`relative py-2 px-3 border text-sm rounded-lg w-full ${darkMode ? "bg-transparent text-white" : ""} outline-gray-400 font-Poppins font-medium`}
                     />
                   </div>
                 )}
                 {amount > 0 && (
                   <div className="relative grid col-span-1">
                     <DatePicker
-                      className={`relative w-full text-[12px] font-semibold ${typeStyles} font-Poppins border py-2 px-8 rounded-lg`}
+                      className={`relative w-full text-[12px] font-semibold ${darkMode ? "bg-transparent" : ""} ${typeStyles} font-Poppins border py-2 px-8 rounded-lg`}
                       selected={startDate}
                       popperPlacement="bottom-end"
                       onChange={(date) => setStartDate(date)}

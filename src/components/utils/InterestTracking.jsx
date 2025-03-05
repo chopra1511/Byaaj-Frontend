@@ -11,7 +11,7 @@ import "swiper/css/navigation";
 import MonthsDetails from "./MonthsDetails";
 import { useState } from "react";
 
-const InterestTracking = ({ startDate, customerID, interest }) => {
+const InterestTracking = ({ startDate, customerID, interest,darkMode }) => {
   // 1. Fetch the tracking data from server
   const { data, loading, error } = useQuery(GET_TRACKING, {
     variables: { customerID },
@@ -26,7 +26,7 @@ const InterestTracking = ({ startDate, customerID, interest }) => {
 
   // 4. Extract tracking info from the server response
   const tracking = data?.customerInterestTracking?.tracking || [];
-  // e.g. tracking = [{ year: 2025, months: [ ... ] }, { year: 2026, ... }]
+  
 
   //Check if any month is "Paid"
   const anyMonthPaid = tracking.some((yearData) =>
@@ -73,10 +73,14 @@ const InterestTracking = ({ startDate, customerID, interest }) => {
       >
         {tracking.map((yearData) => (
           <SwiperSlide key={yearData.year} style={{ width: "280px" }}>
-            <div className="bg-gray-50 border border-gray-300 rounded-lg drop-shadow-lg p-4 w-full">
-              <div className="calendar-header bg-white pb-2 flex items-center justify-center gap-2">
+            <div
+              className={`${
+                darkMode ? "bg-slate-700 text-white" : "bg-white text-slate-700"
+              } border border-gray-300 rounded-lg drop-shadow-lg p-4 w-full`}
+            >
+              <div className="calendar-header bg-transparent pb-2 flex items-center justify-center gap-2">
                 <i className="fi fi-rr-daily-calendar text-2xl pt-1"></i>
-                <h1 className="text-xl font-Poppins font-semibold text-slate-700">
+                <h1 className="text-xl font-Poppins font-semibold">
                   {yearData.year}
                 </h1>
               </div>
@@ -90,11 +94,19 @@ const InterestTracking = ({ startDate, customerID, interest }) => {
                     className={`cursor-pointer py-4 border flex flex-col items-center justify-center transition-colors
                       ${
                         m.status === "Pending"
-                          ? "bg-red-100 border-red-300 hover:bg-red-200"
+                          ? darkMode
+                            ? "bg-red-500 border-red-400 hover:bg-red-700"
+                            : "bg-red-100 border-red-300 hover:bg-red-200"
+                          : darkMode
+                          ? "bg-green-500 border-green-400 hover:bg-green-700"
                           : "bg-green-100 border-green-300 hover:bg-green-200"
                       }`}
                   >
-                    <span className="font-Poppins text-slate-700 text-sm font-semibold">
+                    <span
+                      className={`font-Poppins ${
+                        darkMode ? "text-white" : "text-slate-700"
+                      } text-sm font-semibold`}
+                    >
                       {m.month}
                     </span>
                   </div>
@@ -107,7 +119,7 @@ const InterestTracking = ({ startDate, customerID, interest }) => {
 
       {anyMonthPaid && (
         <div>
-          <MonthsDetails tracking={tracking} />
+          <MonthsDetails tracking={tracking} darkMode={darkMode} />
         </div>
       )}
     </div>

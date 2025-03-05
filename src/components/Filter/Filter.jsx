@@ -1,11 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import { Button } from "@mui/material";
 
-const Filter = ({ onClose }) => {
+const FilterList = ({ title, isSelected, onClick }) => {
+  return (
+    <h1
+      className={`text-sm font-Poppins px-3 py-1 w-fit rounded-md border-2 cursor-pointer 
+      ${
+        isSelected
+          ? "border-white bg-gray-200 text-black"
+          : "border-gray-300 hover:border-black"
+      }`}
+      onClick={() => onClick(title)}
+    >
+      {title}
+    </h1>
+  );
+};
+
+const Filter = ({ onClose, darkMode }) => {
+  const [selectedFilter, setSelectedFilter] = useState("All"); 
+  const [selectedSort, setSelectedSort] = useState("latest"); 
+
+   const handleFilterClick = (title) => {
+     setSelectedFilter(title);
+  };
+  
+
   const buttonStyles = {
     borderRadius: "10px",
     fontFamily: "Poppins",
@@ -22,24 +46,24 @@ const Filter = ({ onClose }) => {
       }}
     >
       <div
-        className=" bg-white p-5 w-full rounded-t-2xl"
+        className={`${
+          darkMode ? "bg-slate-700 text-white" : "bg-white"
+        } p-5 w-full rounded-t-2xl`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="border-b pb-3">
           <h1 className="text-sm font-Poppins font-semibold">Filter by type</h1>
-          <div className="mt-2 flex flex-wrap gap-2 items-center text-black">
-            <h1 className="text-sm font-Poppins px-3 py-1 w-fit rounded-md border-2 cursor-pointer hover:border-black">
-              All
-            </h1>
-            <h1 className="text-sm font-Poppins px-3 py-1 w-fit rounded-md border-2 cursor-pointer hover:border-black">
-              You'll Get
-            </h1>
-            <h1 className="text-sm font-Poppins px-3 py-1 w-fit rounded-md border-2 cursor-pointer hover:border-black">
-              You'll Give
-            </h1>
-            <h1 className="text-sm font-Poppins px-3 py-1 w-fit rounded-md border-2 cursor-pointer hover:border-black">
-              Settled Balance
-            </h1>
+          <div className="mt-2 flex flex-wrap gap-2 items-center">
+            {["All", "You'll Get", "You'll Give", "Settled Balance"].map(
+              (title) => (
+                <FilterList
+                  key={title}
+                  title={title}
+                  isSelected={selectedFilter === title}
+                  onClick={handleFilterClick}
+                />
+              )
+            )}
           </div>
         </div>
 
@@ -48,8 +72,9 @@ const Filter = ({ onClose }) => {
             <h1 className="text-sm font-Poppins font-semibold">Select</h1>
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="latest"
+              value={selectedSort} // Controlled component
               name="radio-buttons-group"
+              onChange={(e) => setSelectedSort(e.target.value)}
             >
               {["latest", "highest", "lowest", "name"].map((value, index) => (
                 <FormControlLabel
@@ -58,16 +83,22 @@ const Filter = ({ onClose }) => {
                   control={
                     <Radio
                       sx={{
-                        color: "#334155", // Default color
-                        "&.Mui-checked": { color: "#334155" }, // White when selected
-                          }}
-                          onChange={(e) => {
-                              console.log(e.target.value)
-                          }}
+                        color: darkMode ? "white" : "#334155",
+                        "&.Mui-checked": {
+                          color: darkMode ? "white" : "#334155",
+                        },
+                      }}
                     />
                   }
                   label={
-                    <span style={{ color: "black", fontWeight: "500", fontSize:"14px", fontFamily:"Poppins" }}>
+                    <span
+                      style={{
+                        color: darkMode ? "white" : "black",
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        fontFamily: "Poppins",
+                      }}
+                    >
                       {value === "latest"
                         ? "Latest"
                         : value === "highest"
@@ -88,7 +119,11 @@ const Filter = ({ onClose }) => {
             variant="contained"
             fullWidth
             size="large"
-            sx={{ ...buttonStyles, backgroundColor: "#334155" }}
+            sx={{
+              ...buttonStyles,
+              backgroundColor: darkMode ? "white" : "#334155",
+              color: darkMode ? "black" : "white",
+            }}
           >
             Save
           </Button>

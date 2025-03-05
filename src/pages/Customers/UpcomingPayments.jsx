@@ -1,14 +1,17 @@
 import { IconButton } from "@mui/material";
 import React, { useContext } from "react";
-import Footer from "../../components/Footer/Footer";
 import { useNavigate } from "react-router";
-import { useQuery } from "@apollo/client";
-import { ALL_CUSTOMERS, GET_ENTRIES } from "../../queries/CustomerQueries";
-import IndianNumberFormat from "../../components/utils/IndianNumberFormat";
-import useBalanceTotals from "../../components/customHooks/useBalanceTotal";
-import empty from "../../assets/empty.png";
-import Loading from "../../components/utils/Loading";
 import { DarkModeContext } from "../../components/utils/DarkModeContext";
+import Footer from "../../components/Footer/Footer";
+import empty from "../../assets/empty.png";
+import { useQuery } from "@apollo/client";
+import {
+  ALL_CUSTOMERS,
+  GET_ENTRIES,
+  UPCOMING_PAYMENTS,
+} from "../../queries/CustomerQueries";
+import Loading from "../../components/utils/Loading";
+import IndianNumberFormat from "../../components/utils/IndianNumberFormat";
 
 const AllCustomerList = ({ customer, darkMode }) => {
   const navigate = useNavigate();
@@ -48,15 +51,27 @@ const AllCustomerList = ({ customer, darkMode }) => {
           {customer.name.charAt(0)}
         </h1>
         <div>
-          <h1 className={`text-sm ${darkMode ? "text-white":"text-black"} font-Poppins font-medium capitalize`}>
+          <h1
+            className={`text-sm ${
+              darkMode ? "text-white" : "text-black"
+            } font-Poppins font-medium capitalize`}
+          >
             {customer.name}
           </h1>
           {customer.interest > 0 && (
-            <p className={`text-[12px] font-Poppins font-medium ${darkMode ? "text-gray-400":"text-gray-600"} `}>
+            <p
+              className={`text-[12px] font-Poppins font-medium ${
+                darkMode ? "text-gray-400" : "text-gray-600"
+              } `}
+            >
               Interest - {customer.interest}%
             </p>
           )}
-          <p className={`text-[12px] font-Poppins font-medium ${darkMode ? "text-gray-300":"text-gray-500"} `}>
+          <p
+            className={`text-[12px] font-Poppins font-medium ${
+              darkMode ? "text-gray-300" : "text-gray-500"
+            } `}
+          >
             {date}
           </p>
         </div>
@@ -76,11 +91,19 @@ const AllCustomerList = ({ customer, darkMode }) => {
           />
         </h1>
         {customer?.interest > 0 && (
-          <p className={`text-[12px] font-Poppins font-medium ${darkMode ? "text-slate-300" : "text-gray-500"}`}>
+          <p
+            className={`text-[12px] font-Poppins font-medium ${
+              darkMode ? "text-slate-300" : "text-gray-500"
+            }`}
+          >
             ₹{Math.floor(interestAmountPerMonth)}/M
           </p>
         )}
-        <p className={`text-[12px] font-Poppins font-semibold ${darkMode ? "text-slate-300" : "text-gray-500"}`}>
+        <p
+          className={`text-[12px] font-Poppins font-semibold ${
+            darkMode ? "text-slate-300" : "text-gray-500"
+          }`}
+        >
           {customer?.entries[0].balance.type === "Paid"
             ? "You'll Get"
             : customer?.entries[0].balance.type === "Got"
@@ -92,23 +115,25 @@ const AllCustomerList = ({ customer, darkMode }) => {
   );
 };
 
-const AllCustomers = () => {
+const UpcomingPayments = () => {
   const navigate = useNavigate();
   const { darkMode } = useContext(DarkModeContext);
 
   const { data: customerData, loading: customerLoading } =
-    useQuery(ALL_CUSTOMERS);
-  const customers = customerData?.customers;
+    useQuery(UPCOMING_PAYMENTS);
+
+  const customers = customerData?.customersWithUpcomingInterest;
 
   if (customerLoading) {
     return <Loading />;
   }
+
   return (
     <div className="overflow-hidden">
       <div
         className={`p-2 lg:w-1/4 ${
           darkMode ? "bg-slate-700" : "bg-white"
-        } drop-shadow-xl flex items-center justify-between gap-10 fixed top-0 left-0 right-0 z-10`}
+        } drop-shadow-xl flex items-center gap-10 fixed top-0 left-0 right-0 z-10`}
       >
         <IconButton onClick={() => navigate(-1)}>
           <i
@@ -122,15 +147,8 @@ const AllCustomers = () => {
             darkMode ? "text-white" : "text-slate-700"
           } capitalize`}
         >
-          Customers
+          Upcoming Payments
         </h1>
-        <IconButton>
-          <i
-            className={`fi fi-br-sort-amount-down-alt pt-1 px-2 ${
-              darkMode ? "text-white" : "text-slate-700"
-            } `}
-          ></i>
-        </IconButton>
       </div>
 
       <div className={`h-screen pt-20 p-5 ${darkMode ? "bg-slate-900" : ""}`}>
@@ -167,4 +185,4 @@ const AllCustomers = () => {
   );
 };
 
-export default AllCustomers;
+export default UpcomingPayments;
