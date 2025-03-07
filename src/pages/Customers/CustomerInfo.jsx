@@ -92,7 +92,7 @@ const CustomerInfo = () => {
   };
 
   return (
-    <div className="overflow-hidden">
+    <div className="h-screen overflow-hidden">
       <div
         className={`p-2 lg:w-1/4 ${
           darkMode ? "bg-slate-700" : "bg-white"

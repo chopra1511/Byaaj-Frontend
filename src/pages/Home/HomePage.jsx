@@ -41,7 +41,7 @@ const HomePage = () => {
     return <Loading />;
   }
   return (
-    <div className={`p-5 ${darkMode ? "bg-slate-900" : ""} overflow-hidden`}>
+    <div className={`h-screen p-5 ${darkMode ? "bg-slate-900" : ""} overflow-hidden`}>
       <div
         className={`flex items-center justify-between ${
           darkMode ? "text-white" : "text-black"
