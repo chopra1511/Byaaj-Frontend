@@ -72,8 +72,8 @@ const InterestTracking = ({ startDate, customerID, interest,darkMode }) => {
         className="w-full max-w-3xl"
       >
         {tracking.map((yearData) => (
-          <SwiperSlide key={yearData.year} style={{ width: "280px" }}>
-            <div
+          <SwiperSlide key={yearData.year} style={{ width: "320px" }}>
+            {/* <div
               className={`${
                 darkMode ? "bg-slate-700 text-white" : "bg-white text-slate-700"
               } border border-gray-300 rounded-lg drop-shadow-lg p-4 w-full`}
@@ -109,6 +109,54 @@ const InterestTracking = ({ startDate, customerID, interest,darkMode }) => {
                     >
                       {m.month}
                     </span>
+                  </div>
+                ))}
+              </div>
+            </div> */}
+            <div
+              className={`${
+                darkMode ? "bg-slate-700 text-white" : "bg-white"
+              }  drop-shadow-xl p-5 mb-5 rounded-xl`}
+            >
+              <div className={`flex items-center justify-between`}>
+                <h1
+                  className={`uppercase tracking-wide font-Poppins font-semibold text-[12px]`}
+                >
+                  Year
+                </h1>
+                <h1 className="font-Poppins font-semibold text-[12px]">
+                  {yearData.year}
+                </h1>
+              </div>
+              <div className="mt-5 grid grid-cols-6 gap-5">
+                {yearData.months.map((m) => (
+                  <div
+                    key={m.month}
+                    className="cursor-pointer"
+                    onClick={() => {
+                      toggleMonthStatus(yearData.year, m.month, m.status);
+                    }}
+                  >
+                    <i
+                      className={`fi  ${
+                        m.status === "Pending"
+                          ? "fi-rr-circle text-slate-400"
+                          : "fi-ss-check-circle text-green-400"
+                      } `}
+                    ></i>
+                    <h1
+                      className={`text-[10px] text-Poppins uppercase  ${
+                        m.status === "Pending"
+                          ? darkMode
+                            ? "text-white "
+                            : "text-slate-600"
+                          : darkMode
+                          ? "text-white"
+                          : "text-black font-semibold"
+                      } `}
+                    >
+                      {m.month}
+                    </h1>
                   </div>
                 ))}
               </div>

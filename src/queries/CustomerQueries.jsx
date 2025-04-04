@@ -88,7 +88,7 @@ const GET_TRACKING = gql`
 
 const UPCOMING_PAYMENTS = gql`
   query UpcomingPayments {
-    customersWithUpcomingInterest {
+    getUpcomingPayments {
       id
       name
       phone

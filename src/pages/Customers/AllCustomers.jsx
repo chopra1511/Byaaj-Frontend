@@ -48,15 +48,27 @@ const AllCustomerList = ({ customer, darkMode }) => {
           {customer.name.charAt(0)}
         </h1>
         <div>
-          <h1 className={`text-sm ${darkMode ? "text-white":"text-black"} font-Poppins font-medium capitalize`}>
+          <h1
+            className={`text-sm ${
+              darkMode ? "text-white" : "text-black"
+            } font-Poppins font-medium capitalize`}
+          >
             {customer.name}
           </h1>
           {customer.interest > 0 && (
-            <p className={`text-[12px] font-Poppins font-medium ${darkMode ? "text-gray-400":"text-gray-600"} `}>
+            <p
+              className={`text-[12px] font-Poppins font-medium ${
+                darkMode ? "text-gray-400" : "text-gray-600"
+              } `}
+            >
               Interest - {customer.interest}%
             </p>
           )}
-          <p className={`text-[12px] font-Poppins font-medium ${darkMode ? "text-gray-300":"text-gray-500"} `}>
+          <p
+            className={`text-[12px] font-Poppins font-medium ${
+              darkMode ? "text-gray-300" : "text-gray-500"
+            } `}
+          >
             {date}
           </p>
         </div>
@@ -76,11 +88,19 @@ const AllCustomerList = ({ customer, darkMode }) => {
           />
         </h1>
         {customer?.interest > 0 && (
-          <p className={`text-[12px] font-Poppins font-medium ${darkMode ? "text-slate-300" : "text-gray-500"}`}>
+          <p
+            className={`text-[12px] font-Poppins font-medium ${
+              darkMode ? "text-slate-300" : "text-gray-500"
+            }`}
+          >
             ₹{Math.floor(interestAmountPerMonth)}/M
           </p>
         )}
-        <p className={`text-[12px] font-Poppins font-semibold ${darkMode ? "text-slate-300" : "text-gray-500"}`}>
+        <p
+          className={`text-[12px] font-Poppins font-semibold ${
+            darkMode ? "text-slate-300" : "text-gray-500"
+          }`}
+        >
           {customer?.entries[0].balance.type === "Paid"
             ? "You'll Get"
             : customer?.entries[0].balance.type === "Got"
@@ -133,7 +153,7 @@ const AllCustomers = () => {
         </IconButton>
       </div>
 
-      <div className={`h-screen pt-20 p-5 ${darkMode ? "bg-slate-900" : ""}`}>
+      <div className={`py-20 p-5  ${darkMode ? "bg-slate-900" : ""}`}>
         {customers?.length === 0 && (
           <div className="h-full flex flex-col items-center justify-center">
             <img src={empty} alt="" className="w-72" />

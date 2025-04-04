@@ -24,24 +24,32 @@ const HomePage = () => {
   const { darkMode } = useContext(DarkModeContext);
 
   // Fetch current user
-  const { data, loading:userLoading } = useQuery(CURRENT_USER); 
+  const { data, loading: isUserLoading } = useQuery(CURRENT_USER);
 
-  const { data: customerData, loading: customerLoading } =
+  const { data: customerData, loading: isCustomerLoading } =
     useQuery(ALL_CUSTOMERS);
   const customers = customerData?.customers;
 
   const { paidTotal, gotTotal } = useBalanceTotals(customers);
 
   // **Filter customers based on search query**
-  const filteredCustomers = customers?.filter((customer) =>
-    customer.name.toLowerCase().includes(searchQuery.toLowerCase())
+  // **Filter customers based on search query**
+  const filteredCustomers = useMemo(
+    () =>
+      customers?.filter((customer) =>
+        customer.name.toLowerCase().includes(searchQuery.toLowerCase())
+      ),
+    [customers, searchQuery]
   );
 
-  if (customerLoading || userLoading) {
-    return <Loading />;
-  }
+  if (isCustomerLoading || isUserLoading) return <Loading />;
+
   return (
-    <div className={`h-screen p-5 ${darkMode ? "bg-slate-900" : ""} overflow-hidden`}>
+    <div
+      className={`h-screen p-5 ${
+        darkMode ? "bg-slate-900" : ""
+      } overflow-hidden`}
+    >
       <div
         className={`flex items-center justify-between ${
           darkMode ? "text-white" : "text-black"
@@ -104,8 +112,10 @@ const HomePage = () => {
           darkMode ? "text-white bg-slate-700" : "bg-white text-black"
         }  drop-shadow-xl rounded-lg my-3`}
       >
-        <div className="py-2  font-Poppins font-medium text-sm flex items-center justify-center gap-2 cursor-pointer"
-        onClick={() => navigate("/upcoming")}>
+        <div
+          className="py-2  font-Poppins font-medium text-sm flex items-center justify-center gap-2 cursor-pointer"
+          onClick={() => navigate("/upcoming")}
+        >
           <i className="fi fi-br-hourglass-end pt-1"></i>
           <h1>Upcoming Payments</h1>
         </div>
@@ -138,7 +148,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="pb-5 h-96 overflow-y-scroll hide-scrollbar">
+      <div className="pb-20 h-96 overflow-y-scroll hide-scrollbar">
         <CustomerList customers={filteredCustomers} darkMode={darkMode} />
       </div>
 
